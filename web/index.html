@@ -11,10 +11,17 @@
         box-sizing: border-box;
       }
 
-      .main {
+      .main, .banner {
         display: flex;
         margin: 0px auto;
         width: 1580px;
+      }
+
+      .banner > div {
+        flex: 1;
+      }
+      .banner > .title {
+        font-size: 18px;
       }
 
       .listing {
@@ -132,6 +139,11 @@
 
     <div class="development">
       <div>Pre-alpha - This product is still in heavy development, and contains many debug statements</div>
+    </div>
+
+    <div class="banner">
+      <div class="title">EVE Ship Fit - An EVE Online Fitting tool</div>
+      <div style="text-align: right;">Visit us at <a href="https://github.com/TrueBrain/EVEShipFit">GitHub</a></div>
     </div>
 
     <div class="main">
