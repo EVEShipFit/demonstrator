@@ -1,0 +1,6 @@
+/target
+Cargo.lock
+pkg/
+wasm-pack.log
+web/dist
+web/node_modules

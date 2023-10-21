@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>EVE Ship Fit - An EVE Online Fitting tool</title>
+    <style>
+      div {
+        box-sizing: border-box;
+      }
+
+      .main {
+        display: flex;
+        margin: 0px auto;
+        width: 1580px;
+      }
+
+      .listing {
+        width: 360px;
+      }
+
+      .fit {
+        position: relative;
+        height: 850px;
+        width: 850px;
+      }
+
+      .stats {
+        width: 370px;
+        margin-top: 60px;
+      }
+
+      .stats > .title {
+        background-color: #dedede;
+        display: flex;
+        margin: 0px 5px;
+      }
+      .stats > .title > div {
+        flex: 1;
+        justify-content: space-between;
+      }
+      .stats > .content {
+        margin: 0px 5px;
+      }
+
+      .flex {
+        display: flex;
+      }
+      .flex > div {
+        flex: 1;
+      }
+
+      .circle {
+        border: 1px solid black;
+        border-radius: 50%;
+        position: absolute;
+        width: 700px;
+        height: 700px;
+        left: 75px;
+        top: 60px;
+      }
+
+      .hull {
+        position: absolute;
+        left: 350px;
+        top: 350px;
+        width: 1px;
+        height: 1px;
+      }
+      .hull > #hull-inner {
+        margin-left: -256px;
+        margin-top: -256px;
+      }
+      .hull > #hull-inner > img {
+        border-radius: 50%;
+        opacity: 0.8;
+      }
+
+      .slot {
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        left: 349px;
+        animation: spin 10s linear infinite reverse;
+        transform-origin: 0 349px;
+      }
+      .slot-inner {
+        border: 1px solid green;
+        width: 40px;
+        height: 50px;
+        left: -20px;
+        top: 0px;
+        position: absolute;
+      }
+
+      .slot {
+        transform: rotate(var(--rotation))
+      }
+      .slot > .slot-inner > img {
+        --reverse-rotation: calc(-1 * var(--rotation));
+        transform: rotate(var(--reverse-rotation));
+        margin-left: -6px;
+        height: 48px;
+        width: 48px;
+      }
+
+      #cpu-pg {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        text-align: right;
+      }
+      #cpu-pg > .title {
+        font-weight: bold;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+    <script src="./bootstrap.js"></script>
+
+    <div class="main">
+      <div class="listing">
+
+      </div>
+
+      <div class="fit">
+        <div class="circle">
+          <div class="hull"><div id="hull-inner"></div></div>
+
+          <div class="slot" data-subsystem="1" style="--rotation:-126deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-subsystem="2" style="--rotation:-114deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-subsystem="3" style="--rotation:-102deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-subsystem="4" style="--rotation:-90deg"><div class="slot-inner"></div></div>
+
+          <div class="slot" data-rig="1" style="--rotation:-73deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-rig="2" style="--rotation:-63deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-rig="3" style="--rotation:-53deg"><div class="slot-inner"></div></div>
+
+          <div class="slot" data-hislot="1" style="--rotation:-34deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="2" style="--rotation:-24deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="3" style="--rotation:-14deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="4" style="--rotation:-4deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="5" style="--rotation:6deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="6" style="--rotation:16deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="7" style="--rotation:26deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-hislot="8" style="--rotation:36deg"><div class="slot-inner"></div></div>
+
+          <div class="slot" data-medslot="1" style="--rotation:55deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="2" style="--rotation:65deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="3" style="--rotation:75deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="4" style="--rotation:85deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="5" style="--rotation:95deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="6" style="--rotation:105deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="7" style="--rotation:115deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-medslot="8" style="--rotation:125deg"><div class="slot-inner"></div></div>
+
+          <div class="slot" data-lowslot="1" style="--rotation:144deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="2" style="--rotation:154deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="3" style="--rotation:164deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="4" style="--rotation:174deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="5" style="--rotation:184deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="6" style="--rotation:194deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="7" style="--rotation:204deg"><div class="slot-inner"></div></div>
+          <div class="slot" data-lowslot="8" style="--rotation:214deg"><div class="slot-inner"></div></div>
+        </div>
+
+        <div id="cpu-pg">
+          <div class="title">CPU</div>
+          <div class="content">
+            <div><span data-attribute="cpu" data-fixed="1"></span> / <span data-attribute="48" data-fixed="1"></span></div>
+          </div>
+          <div class="title">Power Grid</div>
+          <div class="content">
+            <div><span data-attribute="pg" data-fixed="1"></span> / <span data-attribute="11" data-fixed="1"></span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="title" data-category="capacitor">
+          <div>Capacitor</div>
+          <div style="text-align: right;">Depletes in NN:NN:NN</div>
+        </div>
+        <div class="content" data-category="capacitor">
+          <div><span data-attribute="38" data-fixed="0"></span> GJ / ? s</div>
+          <div>-? GJ/s (-?%)</div>
+        </div>
+
+        <div class="title" data-category="offense">
+          <div>Offense</div>
+          <div style="text-align: right;">? dps</div>
+        </div>
+        <div class="content" data-category="offense">
+          <div>? dps (? dps) ? HP</div>
+        </div>
+
+        <div class="title" data-category="defense">
+          <div>Defense</div>
+          <div style="text-align: right;">? ehp</div>
+        </div>
+        <div class="content" data-category="defense">
+          <div>B ? hp/s</div>
+          <div>
+            S
+            <span data-attribute="263"></span> hp
+            <span data-attribute="271" data-resistance data-fixed="1"></span>%
+            <span data-attribute="274" data-resistance data-fixed="1"></span>%
+            <span data-attribute="273" data-resistance data-fixed="1"></span>%
+            <span data-attribute="272" data-resistance data-fixed="1"></span>%
+          </div>
+          <div>
+            A
+            <span data-attribute="265"></span> hp
+            <span data-attribute="267" data-resistance data-fixed="1"></span>%
+            <span data-attribute="270" data-resistance data-fixed="1"></span>%
+            <span data-attribute="269" data-resistance data-fixed="1"></span>%
+            <span data-attribute="268" data-resistance data-fixed="1"></span>%
+          </div>
+          <div>
+            S
+            <span data-attribute="9"></span> hp
+            <span data-attribute="109" data-resistance data-fixed="1"></span>%
+            <span data-attribute="113" data-resistance data-fixed="1"></span>%
+            <span data-attribute="111" data-resistance data-fixed="1"></span>%
+            <span data-attribute="110" data-resistance data-fixed="1"></span>%
+          </div>
+        </div>
+
+        <div class="title" data-category="targeting">
+          <div>Targeting</div>
+          <div style="text-align: right;"><span data-attribute="76" data-fixed="2" data-divide="1000"></span> km</div>
+        </div>
+        <div class="content" data-category="targeting">
+          <div class="flex">
+            <div><span data-attribute="scanStrength" data-fixed="2"></span> points</div>
+            <div><span data-attribute="564" data-fixed="0"></span> mm</div>
+          </div>
+          <div class="flex">
+            <div><span data-attribute="552" data-fixed="0"></span> m</div>
+            <div><span data-attribute="192" data-fixed="0"></span>x</div>
+          </div>
+        </div>
+
+        <div class="title" data-category="navigation">
+          <div>Navigation</div>
+          <div style="text-align: right;"><span data-attribute="37" data-fixed="1"></span> m/s</div>
+        </div>
+        <div class="content" data-category="navigation">
+          <div class="flex">
+            <div><span data-attribute="4" data-fixed="2" data-divide="1000"></span> t</div>
+            <div><span data-attribute="70" data-fixed="4"></span>x</div>
+          </div>
+          <div class="flex">
+            <div><span data-attribute="600" data-fixed="2"></span> AU/s</div>
+            <div><span data-attribute="aligntime" data-fixed="2"></span>s</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="ship-stats"> </div>
+  </body>
+</html>

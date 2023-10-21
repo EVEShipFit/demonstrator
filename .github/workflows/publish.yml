@@ -1,0 +1,59 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+    - main
+  pull_request_target:
+    branches:
+    - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    environment:
+      name: ${{ github.event_name == 'push' && 'Production' || 'Preview' }}
+      url: ${{ steps.pages.outputs.alias }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+    - name: Build WASM module
+      run: |
+        cargo install wasm-pack
+        wasm-pack build
+
+    - name: Build webapp
+      run: |
+        cd web
+        npm install
+        npm run build
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        branch: gh-pages
+        folder: web/dist
+
+    - name: Publish to Cloudflare Pages
+      uses: cloudflare/pages-action@v1
+      id: pages
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+        directory: web/dist
+        branch: ${{ github.event_name == 'push' && github.ref_name || github.event_name == 'repository_dispatch' && 'main' || format('pr/{0}', github.event.pull_request.number) }}
