@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <title>EVE Ship Fit - An EVE Online Fitting tool</title>
     <style>
+      body {
+        margin: 0px;
+      }
       div {
         box-sizing: border-box;
       }
@@ -113,11 +116,23 @@
         font-weight: bold;
         margin-top: 15px;
       }
+
+      .development {
+        background-color: #ffdddd;
+        text-align: center;
+        padding: 10px 0;
+        width: 100%;
+      }
+
     </style>
   </head>
   <body>
     <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
     <script src="./bootstrap.js"></script>
+
+    <div class="development">
+      <div>Pre-alpha - This product is still in heavy development, and contains many debug statements</div>
+    </div>
 
     <div class="main">
       <div class="listing">
