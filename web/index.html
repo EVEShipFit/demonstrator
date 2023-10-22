@@ -25,7 +25,28 @@
       }
 
       .listing {
+        margin-top: 60px;
         width: 360px;
+      }
+      .listing > input {
+        width: 320px;
+      }
+      .listing > ul {
+        height: calc(850px - 60px - 22px);
+        overflow: auto;
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+      }
+      .listing > ul > li {
+        cursor: pointer;
+      }
+      .listing > ul > li:hover {
+        background-color: #dedede;
+      }
+      .listing > ul > li > img {
+        height: 16px;
+        width: 16px;
       }
 
       .fit {
@@ -151,7 +172,8 @@
 
     <div class="main">
       <div class="listing">
-
+        <input type="text" id="items-filter" />
+        <ul id="items-listing"></ul>
       </div>
 
       <div class="fit">
