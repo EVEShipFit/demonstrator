@@ -6,6 +6,7 @@ mod item;
 mod pass_1;
 mod pass_2;
 mod pass_3;
+mod pass_4;
 
 use info::Info;
 use item::Item;
@@ -46,6 +47,7 @@ pub fn calculate(ship_layout: &super::data_types::ShipLayout, skills: &BTreeMap<
     pass_1::PassOne::pass(&info, &mut ship);
     pass_2::PassTwo::pass(&info, &mut ship);
     pass_3::PassThree::pass(&info, &mut ship);
+    pass_4::PassFour::pass(&info, &mut ship);
 
     ship
 }

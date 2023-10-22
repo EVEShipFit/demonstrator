@@ -48,6 +48,28 @@ async function fetch_datafiles() {
         type_ids[type_id].categoryID = group_ids[type_ids[type_id].groupID].categoryID;
     }
 
+    /* We augment the dogma attributes with some extra attributes we calculate. */
+    dogma_attributes[-1] = {
+        "name": "alignTime",
+        "high_is_good": false,
+        "published": true,
+    }
+    dogma_attributes[-2] = {
+        "name": "scanStrength",
+        "high_is_good": true,
+        "published": true,
+    }
+    dogma_attributes[-3] = {
+        "name": "cpuUsage",
+        "high_is_good": true,
+        "published": true,
+    }
+    dogma_attributes[-4] = {
+        "name": "powerUsage",
+        "high_is_good": true,
+        "published": true,
+    }
+
     console.log("Datafiles loaded in ms:", performance.now() - start);
     doneLoading();
 }
@@ -175,29 +197,8 @@ function doneLoading() {
         let value;
         let high_is_good;
 
-        if (attribute == "aligntime") {
-            let agility = ship.hull.attributes.get(70).value;
-            let mass = ship.hull.attributes.get(4).value;
-
-            value = -Math.log(0.25) * agility * mass / 1000000;
-            high_is_good = true;
-        } else if (attribute == "scanStrength") {
-            value = ship.hull.attributes.get(208).value || ship.hull.attributes.get(209).value || ship.hull.attributes.get(210).value || ship.hull.attributes.get(211).value;
-            high_is_good = dogma_attributes[208].high_is_good;
-        } else if (attribute == "cpu") {
-            value = 0;
-            for (let item of ship.items) {
-                value += item.attributes.get(50)?.value || 0;
-            }
-        } else if (attribute == "pg") {
-            value = 0;
-            for (let item of ship.items) {
-                value += item.attributes.get(30)?.value || 0;
-            }
-        } else {
-            value = ship.hull.attributes.get(parseInt(attribute)).value;
-            high_is_good = dogma_attributes[attribute].high_is_good;
-        }
+        value = calculation.hull.attributes.get(parseInt(attribute)).value;
+        high_is_good = dogma_attributes[attribute].high_is_good;
 
         if (span.dataset.resistance !== undefined) {
             value = 100 - value * 100;
