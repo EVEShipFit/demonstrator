@@ -2,6 +2,19 @@ import * as wasm from "eveshipfit";
 
 wasm.init();
 
+for (let div of document.getElementsByClassName("slot")) {
+    div.addEventListener("dblclick", function(event) {
+        /* On double-click, remove the item from the fit. */
+        for (let type of ["lowslot", "medslot", "hislot", "rig", "subsystem"]) {
+            if (div.dataset[type] !== undefined) {
+                delete current_fit[type][div.dataset[type] - 1];
+                recalculate();
+                return;
+            }
+        }
+    });
+}
+
 const esi_fit = {"name": "C3 Ratter : NishEM", "ship_type_id": 29984, "description": "", "items": [{"flag": 125, "quantity": 1, "type_id": 45626}, {"flag": 126, "quantity": 1, "type_id": 45591}, {"flag": 127, "quantity": 1, "type_id": 45601}, {"flag": 128, "quantity": 1, "type_id": 45615}, {"flag": 11, "quantity": 1, "type_id": 22291}, {"flag": 12, "quantity": 1, "type_id": 22291}, {"flag": 13, "quantity": 1, "type_id": 22291}, {"flag": 19, "quantity": 1, "type_id": 41218}, {"flag": 20, "quantity": 1, "type_id": 35790}, {"flag": 21, "quantity": 1, "type_id": 2281}, {"flag": 22, "quantity": 1, "type_id": 15766}, {"flag": 23, "quantity": 1, "type_id": 19187}, {"flag": 24, "quantity": 1, "type_id": 19187}, {"flag": 25, "quantity": 1, "type_id": 35790}, {"flag": 27, "quantity": 1, "type_id": 25715}, {"flag": 28, "quantity": 1, "type_id": 25715}, {"flag": 29, "quantity": 1, "type_id": 25715}, {"flag": 30, "quantity": 1, "type_id": 25715}, {"flag": 31, "quantity": 1, "type_id": 25715}, {"flag": 32, "quantity": 1, "type_id": 25715}, {"flag": 33, "quantity": 1, "type_id": 28756}, {"flag": 92, "quantity": 1, "type_id": 31724}, {"flag": 93, "quantity": 1, "type_id": 31824}, {"flag": 94, "quantity": 1, "type_id": 31378}, {"flag": 5, "quantity": 3720, "type_id": 24492}, {"flag": 5, "quantity": 5472, "type_id": 2679}, {"flag": 5, "quantity": 1, "type_id": 35795}, {"flag": 5, "quantity": 1, "type_id": 35794}, {"flag": 5, "quantity": 8, "type_id": 30486}, {"flag": 5, "quantity": 1, "type_id": 35794}, {"flag": 5, "quantity": 396, "type_id": 24492}]};
 
 const esi_flag_mapping = {
@@ -32,6 +45,7 @@ let group_ids = null;
 let type_ids = null;
 let type_dogma = null;
 let attribute_mapping = {};
+let skills = null;
 
 let current_fit = convert_esi_fit(esi_fit);
 fetch_datafiles();
@@ -103,7 +117,15 @@ async function fetch_datafiles() {
     }
 
     console.log("Datafiles loaded in ms:", performance.now() - start);
-    done_loading();
+
+    skills = load_skills(5);
+    recalculate();
+}
+
+function recalculate() {
+    const calculation = calculate_ship(current_fit, skills);
+    render_ship(calculation);
+    print_debug_information(calculation);
 }
 
 function convert_esi_fit(esi_fit) {
@@ -162,10 +184,7 @@ function load_skills(level) {
     return skills;
 }
 
-function done_loading() {
-    const skills = load_skills(5);
-    let calculation = calculate_ship(current_fit, skills);
-
+function render_ship(calculation) {
     let slot_modifier = {
         "hiSlots": 0,
         "medSlots": 0,
@@ -184,16 +203,23 @@ function done_loading() {
         const slot_divs = document.querySelectorAll("[data-" + slot_type + "]");
         const maxSlots = (calculation.hull.attributes.get(attribute_mapping[atribute_name])?.value || 0) + (slot_modifier[atribute_name] || 0);
         for (let slot_div of slot_divs) {
-            if (slot_div.dataset[slot_type] > maxSlots) {
+            const type_id = slots[slot_div.dataset[slot_type] - 1];
+            const slot_inner = slot_div.querySelector(".slot-inner");
+            if (type_id) {
+                slot_inner.innerHTML = "<img src=\"https://images.evetech.net/types/" + type_id + "/icon?size=64\" title=\"" + type_ids[type_id].name + "\" />";
+            } else {
+                slot_inner.innerHTML = "";
+            }
+
+            if (slot_div.dataset[slot_type] > maxSlots && type_id === undefined) {
                 slot_div.style.display = "none";
+            } else if (slot_div.dataset[slot_type] > maxSlots) {
+                slot_div.style.display = "block";
+                slot_div.style.opacity = 0.5;
+                slot_inner.classList.add("invalid");
             } else {
                 slot_div.style.display = "block";
-
-                const type_id = slots[slot_div.dataset[slot_type] - 1];
-                if (type_id) {
-                    const slot_inner = slot_div.querySelector(".slot-inner");
-                    slot_inner.innerHTML = "<img src=\"https://images.evetech.net/types/" + type_id + "/icon?size=64\" title=\"" + type_ids[type_id].name + "\" />";
-                }
+                slot_inner.classList.remove("invalid");
             }
         }
     }
@@ -245,7 +271,9 @@ function done_loading() {
             maximumFractionDigits: span.dataset.fixed,
         });
     }
+}
 
+function print_debug_information(calculation) {
     let stats = "";
 
     function print_local_effects(effects) {
