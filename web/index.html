@@ -195,11 +195,11 @@
         <div id="cpu-pg">
           <div class="title">CPU</div>
           <div class="content">
-            <div><span data-attribute="-3" data-fixed="1"></span> / <span data-attribute="48" data-fixed="1"></span></div>
+            <div><span data-attribute="cpuUsage" data-fixed="1"></span> / <span data-attribute="cpuOutput" data-fixed="1"></span></div>
           </div>
           <div class="title">Power Grid</div>
           <div class="content">
-            <div><span data-attribute="-4" data-fixed="1"></span> / <span data-attribute="11" data-fixed="1"></span></div>
+            <div><span data-attribute="powerUsage" data-fixed="1"></span> / <span data-attribute="powerOutput" data-fixed="1"></span></div>
           </div>
 
         </div>
@@ -211,7 +211,7 @@
           <div style="text-align: right;">Depletes in NN:NN:NN</div>
         </div>
         <div class="content" data-category="capacitor">
-          <div><span data-attribute="38" data-fixed="0"></span> GJ / ? s</div>
+          <div><span data-attribute="capacity" data-fixed="0"></span> GJ / ? s</div>
           <div>-? GJ/s (-?%)</div>
         </div>
 
@@ -231,57 +231,57 @@
           <div>B ? hp/s</div>
           <div>
             S
-            <span data-attribute="263"></span> hp
-            <span data-attribute="271" data-resistance data-fixed="1"></span>%
-            <span data-attribute="274" data-resistance data-fixed="1"></span>%
-            <span data-attribute="273" data-resistance data-fixed="1"></span>%
-            <span data-attribute="272" data-resistance data-fixed="1"></span>%
+            <span data-attribute="shieldCapacity"></span> hp
+            <span data-attribute="shieldEmDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="shieldThermalDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="shieldKineticDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="shieldExplosiveDamageResonance" data-resistance data-fixed="1"></span>%
           </div>
           <div>
             A
-            <span data-attribute="265"></span> hp
-            <span data-attribute="267" data-resistance data-fixed="1"></span>%
-            <span data-attribute="270" data-resistance data-fixed="1"></span>%
-            <span data-attribute="269" data-resistance data-fixed="1"></span>%
-            <span data-attribute="268" data-resistance data-fixed="1"></span>%
+            <span data-attribute="armorHP"></span> hp
+            <span data-attribute="armorEmDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="armorThermalDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="armorKineticDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="armorExplosiveDamageResonance" data-resistance data-fixed="1"></span>%
           </div>
           <div>
             S
-            <span data-attribute="9"></span> hp
-            <span data-attribute="109" data-resistance data-fixed="1"></span>%
-            <span data-attribute="113" data-resistance data-fixed="1"></span>%
-            <span data-attribute="111" data-resistance data-fixed="1"></span>%
-            <span data-attribute="110" data-resistance data-fixed="1"></span>%
+            <span data-attribute="hp"></span> hp
+            <span data-attribute="emDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="thermalDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="kineticDamageResonance" data-resistance data-fixed="1"></span>%
+            <span data-attribute="explosiveDamageResonance" data-resistance data-fixed="1"></span>%
           </div>
         </div>
 
         <div class="title" data-category="targeting">
           <div>Targeting</div>
-          <div style="text-align: right;"><span data-attribute="76" data-fixed="2" data-divide="1000"></span> km</div>
+          <div style="text-align: right;"><span data-attribute="maxTargetRange" data-fixed="2" data-divide="1000"></span> km</div>
         </div>
         <div class="content" data-category="targeting">
           <div class="flex">
-            <div><span data-attribute="-2" data-fixed="2"></span> points</div>
-            <div><span data-attribute="564" data-fixed="0"></span> mm</div>
+            <div><span data-attribute="scanStrength" data-fixed="2"></span> points</div>
+            <div><span data-attribute="scanResolution" data-fixed="0"></span> mm</div>
           </div>
           <div class="flex">
-            <div><span data-attribute="552" data-fixed="0"></span> m</div>
-            <div><span data-attribute="192" data-fixed="0"></span>x</div>
+            <div><span data-attribute="signatureRadius" data-fixed="0"></span> m</div>
+            <div><span data-attribute="maxLockedTargets" data-fixed="0"></span>x</div>
           </div>
         </div>
 
         <div class="title" data-category="navigation">
           <div>Navigation</div>
-          <div style="text-align: right;"><span data-attribute="37" data-fixed="1"></span> m/s</div>
+          <div style="text-align: right;"><span data-attribute="maxVelocity" data-fixed="1"></span> m/s</div>
         </div>
         <div class="content" data-category="navigation">
           <div class="flex">
-            <div><span data-attribute="4" data-fixed="2" data-divide="1000"></span> t</div>
-            <div><span data-attribute="70" data-fixed="4"></span>x</div>
+            <div><span data-attribute="mass" data-fixed="2" data-divide="1000"></span> t</div>
+            <div><span data-attribute="agility" data-fixed="4"></span>x</div>
           </div>
           <div class="flex">
-            <div><span data-attribute="600" data-fixed="2"></span> AU/s</div>
-            <div><span data-attribute="-1" data-fixed="2"></span>s</div>
+            <div><span data-attribute="warpSpeedMultiplier" data-fixed="2"></span> AU/s</div>
+            <div><span data-attribute="alignTime" data-fixed="2"></span>s</div>
           </div>
         </div>
       </div>

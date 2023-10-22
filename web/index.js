@@ -215,7 +215,8 @@ function done_loading() {
         let value;
         let high_is_good;
 
-        value = calculation.hull.attributes.get(parseInt(attribute)).value;
+        attribute = attribute_mapping[attribute];
+        value = calculation.hull.attributes.get(attribute).value;
         high_is_good = dogma_attributes[attribute].high_is_good;
 
         if (span.dataset.resistance !== undefined) {
