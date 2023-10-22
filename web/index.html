@@ -28,23 +28,42 @@
         margin-top: 60px;
         width: 360px;
       }
-      .listing > input {
-        width: 320px;
+
+      .listing > #category {
+        display: flex;
+        margin-bottom: 6px;
       }
-      .listing > ul {
-        height: calc(850px - 60px - 22px);
+      .listing > #category > div {
+        background-color: #dedede;
+        cursor: pointer;
+        flex: 1;
+        justify-content: space-between;
+        text-align: center;
+      }
+      .listing > #category > div:hover {
+        background-color: #cccccc;
+      }
+      .listing > #category > div.selected {
+        background-color: #bbbbbb;
+      }
+
+      .listing input {
+        width: 350px;
+      }
+      .listing ul {
+        height: calc(850px - 60px - 22px - 24px);
         overflow: auto;
         list-style-type: none;
         margin: 0px;
         padding: 0px;
       }
-      .listing > ul > li {
+      .listing ul > li {
         cursor: pointer;
       }
-      .listing > ul > li:hover {
+      .listing ul > li:hover {
         background-color: #dedede;
       }
-      .listing > ul > li > img {
+      .listing ul > li > img {
         height: 16px;
         width: 16px;
       }
@@ -172,8 +191,20 @@
 
     <div class="main">
       <div class="listing">
-        <input type="text" id="items-filter" />
-        <ul id="items-listing"></ul>
+        <div id="category">
+          <div class="selected" data-category="hulls">Hulls</div>
+          <div data-category="hardware">Hardware</div>
+        </div>
+
+        <div id="hulls">
+          <input type="text" id="hulls-filter" />
+          <ul id="hulls-list"></ul>
+        </div>
+
+        <div id="hardware" style="display: none;">
+          <input type="text" id="hardware-filter" />
+          <ul id="hardware-list"></ul>
+        </div>
       </div>
 
       <div class="fit">
@@ -256,7 +287,7 @@
           <div>B ? hp/s</div>
           <div>
             S
-            <span data-attribute="shieldCapacity"></span> hp
+            <span data-attribute="shieldCapacity" data-fixed="0"></span> hp
             <span data-attribute="shieldEmDamageResonance" data-resistance data-fixed="1"></span>%
             <span data-attribute="shieldThermalDamageResonance" data-resistance data-fixed="1"></span>%
             <span data-attribute="shieldKineticDamageResonance" data-resistance data-fixed="1"></span>%
@@ -264,7 +295,7 @@
           </div>
           <div>
             A
-            <span data-attribute="armorHP"></span> hp
+            <span data-attribute="armorHP" data-fixed="0"></span> hp
             <span data-attribute="armorEmDamageResonance" data-resistance data-fixed="1"></span>%
             <span data-attribute="armorThermalDamageResonance" data-resistance data-fixed="1"></span>%
             <span data-attribute="armorKineticDamageResonance" data-resistance data-fixed="1"></span>%
@@ -272,7 +303,7 @@
           </div>
           <div>
             S
-            <span data-attribute="hp"></span> hp
+            <span data-attribute="hp" data-fixed="0"></span> hp
             <span data-attribute="emDamageResonance" data-resistance data-fixed="1"></span>%
             <span data-attribute="thermalDamageResonance" data-resistance data-fixed="1"></span>%
             <span data-attribute="kineticDamageResonance" data-resistance data-fixed="1"></span>%

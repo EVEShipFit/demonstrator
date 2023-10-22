@@ -15,9 +15,31 @@ for (let div of document.getElementsByClassName("slot")) {
     });
 }
 
-document.getElementById("items-filter").addEventListener("input", function(event) {
-    rebuild_items_list();
+document.getElementById("hulls-filter").addEventListener("input", function(event) {
+    rebuild_hulls_list();
 });
+document.getElementById("hardware-filter").addEventListener("input", function(event) {
+    rebuild_hardware_list();
+});
+
+const categories = {
+    "hulls": document.getElementById("hulls"),
+    "hardware": document.getElementById("hardware"),
+};
+for (let child of document.getElementById("category").children) {
+    child.addEventListener("click", function(event) {
+        for (let child of document.getElementById("category").children) {
+            child.classList.remove("selected");
+        }
+
+        event.currentTarget.classList.add("selected");
+
+        for (let category in categories) {
+            categories[category].style.display = "none";
+        }
+        categories[event.currentTarget.dataset.category].style.display = "block";
+    });
+}
 
 const esi_fit = {"name": "C3 Ratter : NishEM", "ship_type_id": 29984, "description": "", "items": [{"flag": 125, "quantity": 1, "type_id": 45626}, {"flag": 126, "quantity": 1, "type_id": 45591}, {"flag": 127, "quantity": 1, "type_id": 45601}, {"flag": 128, "quantity": 1, "type_id": 45615}, {"flag": 11, "quantity": 1, "type_id": 22291}, {"flag": 12, "quantity": 1, "type_id": 22291}, {"flag": 13, "quantity": 1, "type_id": 22291}, {"flag": 19, "quantity": 1, "type_id": 41218}, {"flag": 20, "quantity": 1, "type_id": 35790}, {"flag": 21, "quantity": 1, "type_id": 2281}, {"flag": 22, "quantity": 1, "type_id": 15766}, {"flag": 23, "quantity": 1, "type_id": 19187}, {"flag": 24, "quantity": 1, "type_id": 19187}, {"flag": 25, "quantity": 1, "type_id": 35790}, {"flag": 27, "quantity": 1, "type_id": 25715}, {"flag": 28, "quantity": 1, "type_id": 25715}, {"flag": 29, "quantity": 1, "type_id": 25715}, {"flag": 30, "quantity": 1, "type_id": 25715}, {"flag": 31, "quantity": 1, "type_id": 25715}, {"flag": 32, "quantity": 1, "type_id": 25715}, {"flag": 33, "quantity": 1, "type_id": 28756}, {"flag": 92, "quantity": 1, "type_id": 31724}, {"flag": 93, "quantity": 1, "type_id": 31824}, {"flag": 94, "quantity": 1, "type_id": 31378}, {"flag": 5, "quantity": 3720, "type_id": 24492}, {"flag": 5, "quantity": 5472, "type_id": 2679}, {"flag": 5, "quantity": 1, "type_id": 35795}, {"flag": 5, "quantity": 1, "type_id": 35794}, {"flag": 5, "quantity": 8, "type_id": 30486}, {"flag": 5, "quantity": 1, "type_id": 35794}, {"flag": 5, "quantity": 396, "type_id": 24492}]};
 
@@ -133,7 +155,16 @@ async function fetch_datafiles() {
     skills = load_skills(5);
     recalculate();
 
-    rebuild_items_list();
+    rebuild_hulls_list();
+    rebuild_hardware_list();
+}
+
+function click_change_hull(e) {
+    const type_id = e.currentTarget.dataset.type_id;
+
+    current_fit = convert_esi_fit({"ship_type_id": parseInt(type_id), "items": []});
+
+    recalculate();
 }
 
 function click_add_to_fit(e) {
@@ -161,11 +192,53 @@ function click_add_to_fit(e) {
     recalculate();
 }
 
-function rebuild_items_list() {
-    const item_list = document.getElementById("items-listing");
-    const item_filter = document.getElementById("items-filter");
+function rebuild_hulls_list() {
+    const item_list = document.getElementById("hulls-list");
+    const item_filter = document.getElementById("hulls-filter");
 
     item_list.innerHTML = "";
+
+    /* Create the list by applying the filter, and sort. */
+    let filtered_type_ids = {};
+    for (let type_id in type_ids) {
+        /* Filter out non-published items. */
+        if (!type_ids[type_id].published) continue;
+        /* Filter out non-ships (6). */
+        if (type_ids[type_id].categoryID != 6) continue;
+
+        /* Filter out items that don't match the filter. */
+        if (item_filter.value != "" && !type_ids[type_id].name.toLowerCase().includes(item_filter.value.toLowerCase())) continue;
+
+        filtered_type_ids[type_id] = type_ids[type_id];
+    }
+
+    /* Sort the list by name. */
+    const sorted_type_ids = Object.keys(filtered_type_ids).sort((a, b) => {
+        return filtered_type_ids[a].name.localeCompare(filtered_type_ids[b].name);
+    });
+
+    console.log(filtered_type_ids, sorted_type_ids);
+
+    for (let type_id of sorted_type_ids) {
+        const item = document.createElement("li");
+        item.dataset.type_id = type_id;
+        item.innerHTML = "<img src=\"https://images.evetech.net/types/" + type_id + "/icon?size=32\" title=\"" + filtered_type_ids[type_id].name + "\" />" + filtered_type_ids[type_id].name;
+
+        item.addEventListener("dblclick", click_change_hull);
+        item_list.appendChild(item);
+    }
+}
+
+function rebuild_hardware_list() {
+    const item_list = document.getElementById("hardware-list");
+    const item_filter = document.getElementById("hardware-filter");
+
+    item_list.innerHTML = "";
+
+    if (item_filter.value == "" || item_filter.value.length < 3) {
+        item_list.innerHTML = "Enter a search term to input box to start searching.";
+        return;
+    }
 
     /* Create the list by applying the filter, and sort. */
     let filtered_type_ids = {};
@@ -176,7 +249,7 @@ function rebuild_items_list() {
         if (type_ids[type_id].categoryID != 7) continue;
 
         /* Filter out items that don't match the filter. */
-        if (item_filter.value != "" && !type_ids[type_id].name.toLowerCase().includes(item_filter.value.toLowerCase())) continue;
+        if (!type_ids[type_id].name.toLowerCase().includes(item_filter.value.toLowerCase())) continue;
 
         filtered_type_ids[type_id] = type_ids[type_id];
     }
