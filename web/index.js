@@ -217,8 +217,6 @@ function rebuild_hulls_list() {
         return filtered_type_ids[a].name.localeCompare(filtered_type_ids[b].name);
     });
 
-    console.log(filtered_type_ids, sorted_type_ids);
-
     for (let type_id of sorted_type_ids) {
         const item = document.createElement("li");
         item.dataset.type_id = type_id;
