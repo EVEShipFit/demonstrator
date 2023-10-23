@@ -67,11 +67,11 @@ const esi_flag_mapping = {
 };
 
 const dogma_effect_to_slots = {
-    11: "lowslot",
-    12: "hislot",
-    13: "medslot",
-    2663: "rig",
-    3772: "subsystem",
+    "loPower": "lowslot",
+    "hiPower": "hislot",
+    "medPower": "medslot",
+    "rigSlot": "rig",
+    "subSystem": "subsystem",
 };
 
 let dogma_attributes = null;
@@ -145,7 +145,7 @@ function click_add_to_fit(e) {
     let slot_type = undefined;
     type_dogma[type_id].dogmaEffects.forEach(effect => {
         if (slot_type === undefined) {
-            slot_type = dogma_effect_to_slots[effect.effectID];
+            slot_type = dogma_effect_to_slots[dogma_effects[effect.effectID].name];
         }
     });
 
