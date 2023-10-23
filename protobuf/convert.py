@@ -131,8 +131,22 @@ def convert_dogma_effects(path):
             for modifier_info in entry["modifierInfo"]:
                 pbmi = pb2.DogmaEffect.ModifierInfo()
 
-                pbmi.domain = modifier_info["domain"]
-                pbmi.func = modifier_info["func"]
+                match modifier_info["domain"]:
+                    case "itemID": pbmi.domain = pbmi.Domain.itemID
+                    case "shipID": pbmi.domain = pbmi.Domain.shipID
+                    case "charID": pbmi.domain = pbmi.Domain.charID
+                    case "otherID": pbmi.domain = pbmi.Domain.otherID
+                    case "structureID": pbmi.domain = pbmi.Domain.structureID
+                    case "target": pbmi.domain = pbmi.Domain.target
+                    case "targetID": pbmi.domain = pbmi.Domain.targetID
+
+                match modifier_info["func"]:
+                    case "ItemModifier": pbmi.func = pbmi.Func.ItemModifier
+                    case "LocationGroupModifier": pbmi.func = pbmi.Func.LocationGroupModifier
+                    case "LocationModifier": pbmi.func = pbmi.Func.LocationModifier
+                    case "LocationRequiredSkillModifier": pbmi.func = pbmi.Func.LocationRequiredSkillModifier
+                    case "OwnerRequiredSkillModifier": pbmi.func = pbmi.Func.OwnerRequiredSkillModifier
+                    case "EffectStopper": pbmi.func = pbmi.Func.EffectStopper
 
                 if "modifiedAttributeID" in modifier_info:
                     pbmi.modifiedAttributeID = modifier_info["modifiedAttributeID"]

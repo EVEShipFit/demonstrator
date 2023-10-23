@@ -53,8 +53,27 @@ message DogmaAttributes {
 message DogmaEffects {
     message DogmaEffect {
         message ModifierInfo {
-            required string domain = 1;
-            required string func = 2;
+            enum Domain {
+                itemID = 0;
+                shipID = 1;
+                charID = 2;
+                otherID = 3;
+                structureID = 4;
+                target = 5;
+                targetID = 6;
+            }
+
+            enum Func {
+                ItemModifier = 0;
+                LocationGroupModifier = 1;
+                LocationModifier = 2;
+                LocationRequiredSkillModifier = 3;
+                OwnerRequiredSkillModifier = 4;
+                EffectStopper = 5;
+            }
+
+            required Domain domain = 1;
+            required Func func = 2;
             optional int32 modifiedAttributeID = 3;
             optional int32 modifyingAttributeID = 4;
             optional int32 operation = 5;

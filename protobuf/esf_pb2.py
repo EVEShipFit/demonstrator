@@ -19,10 +19,105 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x12protobuf/esf.proto\x12\x03\x65sf\"\x91\x03\n\tTypeDogma\x12,\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1b.esf.TypeDogma.EntriesEntry\x1a\x86\x02\n\x0eTypeDogmaEntry\x12\x46\n\x0f\x64ogmaAttributes\x18\x01 \x03(\x0b\x32-.esf.TypeDogma.TypeDogmaEntry.DogmaAttributes\x12@\n\x0c\x64ogmaEffects\x18\x02 \x03(\x0b\x32*.esf.TypeDogma.TypeDogmaEntry.DogmaEffects\x1a\x35\n\x0f\x44ogmaAttributes\x12\x13\n\x0b\x61ttributeID\x18\x01 \x02(\x05\x12\r\n\x05value\x18\x02 \x02(\x02\x1a\x33\n\x0c\x44ogmaEffects\x12\x10\n\x08\x65\x66\x66\x65\x63tID\x18\x01 \x02(\x05\x12\x11\n\tisDefault\x18\x02 \x02(\x08\x1aM\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12,\n\x05value\x18\x02 \x01(\x0b\x32\x1d.esf.TypeDogma.TypeDogmaEntry:\x02\x38\x01\"\xa2\x02\n\x07TypeIDs\x12*\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x19.esf.TypeIDs.EntriesEntry\x1a\xa5\x01\n\x06TypeID\x12\x0c\n\x04name\x18\x01 \x02(\t\x12\x0f\n\x07groupID\x18\x02 \x02(\x05\x12\x12\n\ncategoryID\x18\x03 \x02(\x05\x12\x11\n\tpublished\x18\x04 \x02(\x08\x12\x15\n\rmarketGroupID\x18\x05 \x01(\x05\x12\x10\n\x08\x63\x61pacity\x18\x06 \x01(\x02\x12\x0c\n\x04mass\x18\x07 \x01(\x02\x12\x0e\n\x06radius\x18\x08 \x01(\x02\x12\x0e\n\x06volume\x18\t \x01(\x02\x1a\x43\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\"\n\x05value\x18\x02 \x01(\x0b\x32\x13.esf.TypeIDs.TypeID:\x02\x38\x01\"\x8a\x02\n\x0f\x44ogmaAttributes\x12\x32\n\x07\x65ntries\x18\x01 \x03(\x0b\x32!.esf.DogmaAttributes.EntriesEntry\x1an\n\x0e\x44ogmaAttribute\x12\x0c\n\x04name\x18\x01 \x02(\t\x12\x11\n\tpublished\x18\x02 \x02(\x08\x12\x14\n\x0c\x64\x65\x66\x61ultValue\x18\x03 \x02(\x02\x12\x12\n\nhighIsGood\x18\x04 \x02(\x08\x12\x11\n\tstackable\x18\x05 \x02(\x08\x1aS\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x32\n\x05value\x18\x02 \x01(\x0b\x32#.esf.DogmaAttributes.DogmaAttribute:\x02\x38\x01\"\x8a\x06\n\x0c\x44ogmaEffects\x12/\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1e.esf.DogmaEffects.EntriesEntry\x1a\xf9\x04\n\x0b\x44ogmaEffect\x12\x0c\n\x04name\x18\x01 \x02(\t\x12\x16\n\x0e\x65\x66\x66\x65\x63tCategory\x18\x02 \x02(\x05\x12\x18\n\x10\x65lectronicChance\x18\x03 \x02(\x08\x12\x14\n\x0cisAssistance\x18\x04 \x02(\x08\x12\x13\n\x0bisOffensive\x18\x05 \x02(\x08\x12\x12\n\nisWarpSafe\x18\x06 \x02(\x08\x12\x18\n\x10propulsionChance\x18\x07 \x02(\x08\x12\x13\n\x0brangeChance\x18\x08 \x02(\x08\x12\x1c\n\x14\x64ischargeAttributeID\x18\t \x01(\x05\x12\x1b\n\x13\x64urationAttributeID\x18\n \x01(\x05\x12\x18\n\x10rangeAttributeID\x18\x0b \x01(\x05\x12\x1a\n\x12\x66\x61lloffAttributeID\x18\x0c \x01(\x05\x12 \n\x18trackingSpeedAttributeID\x18\r \x01(\x05\x12%\n\x1d\x66ittingUsageChanceAttributeID\x18\x0e \x01(\x05\x12\x1d\n\x15resistanceAttributeID\x18\x0f \x01(\x05\x12@\n\x0cmodifierInfo\x18\x10 \x03(\x0b\x32*.esf.DogmaEffects.DogmaEffect.ModifierInfo\x1a\xa0\x01\n\x0cModifierInfo\x12\x0e\n\x06\x64omain\x18\x01 \x02(\t\x12\x0c\n\x04\x66unc\x18\x02 \x02(\t\x12\x1b\n\x13modifiedAttributeID\x18\x03 \x01(\x05\x12\x1c\n\x14modifyingAttributeID\x18\x04 \x01(\x05\x12\x11\n\toperation\x18\x05 \x01(\x05\x12\x0f\n\x07groupID\x18\x06 \x01(\x05\x12\x13\n\x0bskillTypeID\x18\x07 \x01(\x05\x1aM\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12,\n\x05value\x18\x02 \x01(\x0b\x32\x1d.esf.DogmaEffects.DogmaEffect:\x02\x38\x01'
+  serialized_pb=b'\n\x12protobuf/esf.proto\x12\x03\x65sf\"\x91\x03\n\tTypeDogma\x12,\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1b.esf.TypeDogma.EntriesEntry\x1a\x86\x02\n\x0eTypeDogmaEntry\x12\x46\n\x0f\x64ogmaAttributes\x18\x01 \x03(\x0b\x32-.esf.TypeDogma.TypeDogmaEntry.DogmaAttributes\x12@\n\x0c\x64ogmaEffects\x18\x02 \x03(\x0b\x32*.esf.TypeDogma.TypeDogmaEntry.DogmaEffects\x1a\x35\n\x0f\x44ogmaAttributes\x12\x13\n\x0b\x61ttributeID\x18\x01 \x02(\x05\x12\r\n\x05value\x18\x02 \x02(\x02\x1a\x33\n\x0c\x44ogmaEffects\x12\x10\n\x08\x65\x66\x66\x65\x63tID\x18\x01 \x02(\x05\x12\x11\n\tisDefault\x18\x02 \x02(\x08\x1aM\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12,\n\x05value\x18\x02 \x01(\x0b\x32\x1d.esf.TypeDogma.TypeDogmaEntry:\x02\x38\x01\"\xa2\x02\n\x07TypeIDs\x12*\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x19.esf.TypeIDs.EntriesEntry\x1a\xa5\x01\n\x06TypeID\x12\x0c\n\x04name\x18\x01 \x02(\t\x12\x0f\n\x07groupID\x18\x02 \x02(\x05\x12\x12\n\ncategoryID\x18\x03 \x02(\x05\x12\x11\n\tpublished\x18\x04 \x02(\x08\x12\x15\n\rmarketGroupID\x18\x05 \x01(\x05\x12\x10\n\x08\x63\x61pacity\x18\x06 \x01(\x02\x12\x0c\n\x04mass\x18\x07 \x01(\x02\x12\x0e\n\x06radius\x18\x08 \x01(\x02\x12\x0e\n\x06volume\x18\t \x01(\x02\x1a\x43\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\"\n\x05value\x18\x02 \x01(\x0b\x32\x13.esf.TypeIDs.TypeID:\x02\x38\x01\"\x8a\x02\n\x0f\x44ogmaAttributes\x12\x32\n\x07\x65ntries\x18\x01 \x03(\x0b\x32!.esf.DogmaAttributes.EntriesEntry\x1an\n\x0e\x44ogmaAttribute\x12\x0c\n\x04name\x18\x01 \x02(\t\x12\x11\n\tpublished\x18\x02 \x02(\x08\x12\x14\n\x0c\x64\x65\x66\x61ultValue\x18\x03 \x02(\x02\x12\x12\n\nhighIsGood\x18\x04 \x02(\x08\x12\x11\n\tstackable\x18\x05 \x02(\x08\x1aS\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12\x32\n\x05value\x18\x02 \x01(\x0b\x32#.esf.DogmaAttributes.DogmaAttribute:\x02\x38\x01\"\xf6\x08\n\x0c\x44ogmaEffects\x12/\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1e.esf.DogmaEffects.EntriesEntry\x1a\xe5\x07\n\x0b\x44ogmaEffect\x12\x0c\n\x04name\x18\x01 \x02(\t\x12\x16\n\x0e\x65\x66\x66\x65\x63tCategory\x18\x02 \x02(\x05\x12\x18\n\x10\x65lectronicChance\x18\x03 \x02(\x08\x12\x14\n\x0cisAssistance\x18\x04 \x02(\x08\x12\x13\n\x0bisOffensive\x18\x05 \x02(\x08\x12\x12\n\nisWarpSafe\x18\x06 \x02(\x08\x12\x18\n\x10propulsionChance\x18\x07 \x02(\x08\x12\x13\n\x0brangeChance\x18\x08 \x02(\x08\x12\x1c\n\x14\x64ischargeAttributeID\x18\t \x01(\x05\x12\x1b\n\x13\x64urationAttributeID\x18\n \x01(\x05\x12\x18\n\x10rangeAttributeID\x18\x0b \x01(\x05\x12\x1a\n\x12\x66\x61lloffAttributeID\x18\x0c \x01(\x05\x12 \n\x18trackingSpeedAttributeID\x18\r \x01(\x05\x12%\n\x1d\x66ittingUsageChanceAttributeID\x18\x0e \x01(\x05\x12\x1d\n\x15resistanceAttributeID\x18\x0f \x01(\x05\x12@\n\x0cmodifierInfo\x18\x10 \x03(\x0b\x32*.esf.DogmaEffects.DogmaEffect.ModifierInfo\x1a\x8c\x04\n\x0cModifierInfo\x12\x41\n\x06\x64omain\x18\x01 \x02(\x0e\x32\x31.esf.DogmaEffects.DogmaEffect.ModifierInfo.Domain\x12=\n\x04\x66unc\x18\x02 \x02(\x0e\x32/.esf.DogmaEffects.DogmaEffect.ModifierInfo.Func\x12\x1b\n\x13modifiedAttributeID\x18\x03 \x01(\x05\x12\x1c\n\x14modifyingAttributeID\x18\x04 \x01(\x05\x12\x11\n\toperation\x18\x05 \x01(\x05\x12\x0f\n\x07groupID\x18\x06 \x01(\x05\x12\x13\n\x0bskillTypeID\x18\x07 \x01(\x05\"d\n\x06\x44omain\x12\n\n\x06itemID\x10\x00\x12\n\n\x06shipID\x10\x01\x12\n\n\x06\x63harID\x10\x02\x12\x0b\n\x07otherID\x10\x03\x12\x0f\n\x0bstructureID\x10\x04\x12\n\n\x06target\x10\x05\x12\x0c\n\x08targetID\x10\x06\"\x9f\x01\n\x04\x46unc\x12\x10\n\x0cItemModifier\x10\x00\x12\x19\n\x15LocationGroupModifier\x10\x01\x12\x14\n\x10LocationModifier\x10\x02\x12!\n\x1dLocationRequiredSkillModifier\x10\x03\x12\x1e\n\x1aOwnerRequiredSkillModifier\x10\x04\x12\x11\n\rEffectStopper\x10\x05\x1aM\n\x0c\x45ntriesEntry\x12\x0b\n\x03key\x18\x01 \x01(\x05\x12,\n\x05value\x18\x02 \x01(\x0b\x32\x1d.esf.DogmaEffects.DogmaEffect:\x02\x38\x01'
 )
 
 
+
+_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_DOMAIN = _descriptor.EnumDescriptor(
+  name='Domain',
+  full_name='esf.DogmaEffects.DogmaEffect.ModifierInfo.Domain',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='itemID', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='shipID', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='charID', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='otherID', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='structureID', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='target', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='targetID', index=6, number=6,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=1795,
+  serialized_end=1895,
+)
+_sym_db.RegisterEnumDescriptor(_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_DOMAIN)
+
+_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_FUNC = _descriptor.EnumDescriptor(
+  name='Func',
+  full_name='esf.DogmaEffects.DogmaEffect.ModifierInfo.Func',
+  filename=None,
+  file=DESCRIPTOR,
+  create_key=_descriptor._internal_create_key,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='ItemModifier', index=0, number=0,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='LocationGroupModifier', index=1, number=1,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='LocationModifier', index=2, number=2,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='LocationRequiredSkillModifier', index=3, number=3,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='OwnerRequiredSkillModifier', index=4, number=4,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+    _descriptor.EnumValueDescriptor(
+      name='EffectStopper', index=5, number=5,
+      serialized_options=None,
+      type=None,
+      create_key=_descriptor._internal_create_key),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=1898,
+  serialized_end=2057,
+)
+_sym_db.RegisterEnumDescriptor(_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_FUNC)
 
 
 _TYPEDOGMA_TYPEDOGMAENTRY_DOGMAATTRIBUTES = _descriptor.Descriptor(
@@ -505,15 +600,15 @@ _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='domain', full_name='esf.DogmaEffects.DogmaEffect.ModifierInfo.domain', index=0,
-      number=1, type=9, cpp_type=9, label=2,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=1, type=14, cpp_type=8, label=2,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
       name='func', full_name='esf.DogmaEffects.DogmaEffect.ModifierInfo.func', index=1,
-      number=2, type=9, cpp_type=9, label=2,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      number=2, type=14, cpp_type=8, label=2,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -557,6 +652,8 @@ _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO = _descriptor.Descriptor(
   ],
   nested_types=[],
   enum_types=[
+    _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_DOMAIN,
+    _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_FUNC,
   ],
   serialized_options=None,
   is_extendable=False,
@@ -565,7 +662,7 @@ _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1533,
-  serialized_end=1693,
+  serialized_end=2057,
 )
 
 _DOGMAEFFECTS_DOGMAEFFECT = _descriptor.Descriptor(
@@ -701,7 +798,7 @@ _DOGMAEFFECTS_DOGMAEFFECT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1060,
-  serialized_end=1693,
+  serialized_end=2057,
 )
 
 _DOGMAEFFECTS_ENTRIESENTRY = _descriptor.Descriptor(
@@ -738,8 +835,8 @@ _DOGMAEFFECTS_ENTRIESENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1695,
-  serialized_end=1772,
+  serialized_start=2059,
+  serialized_end=2136,
 )
 
 _DOGMAEFFECTS = _descriptor.Descriptor(
@@ -770,7 +867,7 @@ _DOGMAEFFECTS = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=994,
-  serialized_end=1772,
+  serialized_end=2136,
 )
 
 _TYPEDOGMA_TYPEDOGMAENTRY_DOGMAATTRIBUTES.containing_type = _TYPEDOGMA_TYPEDOGMAENTRY
@@ -789,7 +886,11 @@ _DOGMAATTRIBUTES_DOGMAATTRIBUTE.containing_type = _DOGMAATTRIBUTES
 _DOGMAATTRIBUTES_ENTRIESENTRY.fields_by_name['value'].message_type = _DOGMAATTRIBUTES_DOGMAATTRIBUTE
 _DOGMAATTRIBUTES_ENTRIESENTRY.containing_type = _DOGMAATTRIBUTES
 _DOGMAATTRIBUTES.fields_by_name['entries'].message_type = _DOGMAATTRIBUTES_ENTRIESENTRY
+_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO.fields_by_name['domain'].enum_type = _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_DOMAIN
+_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO.fields_by_name['func'].enum_type = _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_FUNC
 _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO.containing_type = _DOGMAEFFECTS_DOGMAEFFECT
+_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_DOMAIN.containing_type = _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO
+_DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO_FUNC.containing_type = _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO
 _DOGMAEFFECTS_DOGMAEFFECT.fields_by_name['modifierInfo'].message_type = _DOGMAEFFECTS_DOGMAEFFECT_MODIFIERINFO
 _DOGMAEFFECTS_DOGMAEFFECT.containing_type = _DOGMAEFFECTS
 _DOGMAEFFECTS_ENTRIESENTRY.fields_by_name['value'].message_type = _DOGMAEFFECTS_DOGMAEFFECT

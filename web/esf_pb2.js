@@ -623,8 +623,8 @@ export const esf = $root.esf = (() => {
                                 this[ks[i]] = p[ks[i]];
                 }
 
-                ModifierInfo.prototype.domain = "";
-                ModifierInfo.prototype.func = "";
+                ModifierInfo.prototype.domain = 0;
+                ModifierInfo.prototype.func = 0;
                 ModifierInfo.prototype.modifiedAttributeID = 0;
                 ModifierInfo.prototype.modifyingAttributeID = 0;
                 ModifierInfo.prototype.operation = 0;
@@ -639,11 +639,11 @@ export const esf = $root.esf = (() => {
                         var t = r.uint32();
                         switch (t >>> 3) {
                         case 1: {
-                                m.domain = r.string();
+                                m.domain = r.int32();
                                 break;
                             }
                         case 2: {
-                                m.func = r.string();
+                                m.func = r.int32();
                                 break;
                             }
                         case 3: {
@@ -677,6 +677,29 @@ export const esf = $root.esf = (() => {
                         throw $util.ProtocolError("missing required 'func'", { instance: m });
                     return m;
                 };
+
+                ModifierInfo.Domain = (function() {
+                    const valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "itemID"] = 0;
+                    values[valuesById[1] = "shipID"] = 1;
+                    values[valuesById[2] = "charID"] = 2;
+                    values[valuesById[3] = "otherID"] = 3;
+                    values[valuesById[4] = "structureID"] = 4;
+                    values[valuesById[5] = "target"] = 5;
+                    values[valuesById[6] = "targetID"] = 6;
+                    return values;
+                })();
+
+                ModifierInfo.Func = (function() {
+                    const valuesById = {}, values = Object.create(valuesById);
+                    values[valuesById[0] = "ItemModifier"] = 0;
+                    values[valuesById[1] = "LocationGroupModifier"] = 1;
+                    values[valuesById[2] = "LocationModifier"] = 2;
+                    values[valuesById[3] = "LocationRequiredSkillModifier"] = 3;
+                    values[valuesById[4] = "OwnerRequiredSkillModifier"] = 4;
+                    values[valuesById[5] = "EffectStopper"] = 5;
+                    return values;
+                })();
 
                 return ModifierInfo;
             })();

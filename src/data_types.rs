@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use serde_repr::*;
 
 #[allow(non_snake_case)]
 #[derive(Deserialize, Debug)]
@@ -43,10 +44,35 @@ pub struct DogmaAttribute {
 }
 
 #[allow(non_snake_case)]
+#[derive(Deserialize_repr, Debug)]
+#[repr(i32)]
+pub enum DogmaEffectModifierInfoDomain {
+    ItemID = 0,
+    ShipID = 1,
+    CharID = 2,
+    OtherID = 3,
+    StructureID = 4,
+    Target = 5,
+    TargetID = 6,
+}
+
+#[allow(non_snake_case)]
+#[derive(Deserialize_repr, Debug)]
+#[repr(i32)]
+pub enum DogmaEffectModifierInfoFunc {
+    ItemModifier = 0,
+    LocationGroupModifier = 1,
+    LocationModifier = 2,
+    LocationRequiredSkillModifier = 3,
+    OwnerRequiredSkillModifier = 4,
+    EffectStopper = 5,
+}
+
+#[allow(non_snake_case)]
 #[derive(Deserialize, Debug)]
 pub struct DogmaEffectModifierInfo {
-    pub domain: String,
-    pub func: String,
+    pub domain: DogmaEffectModifierInfoDomain,
+    pub func: DogmaEffectModifierInfoFunc,
     pub modifiedAttributeID: Option<i32>,
     pub modifyingAttributeID: Option<i32>,
     pub operation: Option<i32>,

@@ -1,3 +1,5 @@
+use crate::data_types::{DogmaEffectModifierInfoDomain, DogmaEffectModifierInfoFunc};
+
 use super::item::{Effect, EffectCategory, EffectOperator, Item, Object};
 use super::{Info, Pass, Ship};
 
@@ -29,29 +31,29 @@ struct Pass2Effect {
     target_attribute_id: i32,
 }
 
-fn get_modifier_func(func: &str, skill_type_id: Option<i32>, group_id: Option<i32>) -> Modifier {
+fn get_modifier_func(func: DogmaEffectModifierInfoFunc, skill_type_id: Option<i32>, group_id: Option<i32>) -> Modifier {
     match func {
-        "LocationRequiredSkillModifier" => {
+        DogmaEffectModifierInfoFunc::LocationRequiredSkillModifier => {
             Modifier::LocationRequiredSkillModifier(skill_type_id.unwrap())
         }
-        "LocationGroupModifier" => Modifier::LocationGroupModifier(group_id.unwrap()),
-        "LocationModifier" => Modifier::LocationModifier(),
-        "ItemModifier" => Modifier::ItemModifier(),
-        "OwnerRequiredSkillModifier" => {
+        DogmaEffectModifierInfoFunc::LocationGroupModifier => Modifier::LocationGroupModifier(group_id.unwrap()),
+        DogmaEffectModifierInfoFunc::LocationModifier => Modifier::LocationModifier(),
+        DogmaEffectModifierInfoFunc::ItemModifier => Modifier::ItemModifier(),
+        DogmaEffectModifierInfoFunc::OwnerRequiredSkillModifier => {
             Modifier::OwnerRequiredSkillModifier(skill_type_id.unwrap())
         }
-        _ => panic!("Unknown modifier function: {}", func),
+        _ => panic!("Unknown modifier function: {:?}", func),
     }
 }
 
-fn get_target_object(domain: &str, origin: Object) -> Object {
+fn get_target_object(domain: DogmaEffectModifierInfoDomain, origin: Object) -> Object {
     match domain {
-        "shipID" => Object::Ship,
-        "charID" => Object::Char,
-        "otherID" => Object::Char, // TODO -- This is incorrect
-        "structureID" => Object::Structure,
-        "itemID" => origin,
-        _ => panic!("Unknown domain: {}", domain),
+        DogmaEffectModifierInfoDomain::ShipID => Object::Ship,
+        DogmaEffectModifierInfoDomain::CharID => Object::Char,
+        DogmaEffectModifierInfoDomain::OtherID => Object::Char, // TODO -- This is incorrect
+        DogmaEffectModifierInfoDomain::StructureID => Object::Structure,
+        DogmaEffectModifierInfoDomain::ItemID => origin,
+        _ => panic!("Unknown domain: {:?}", domain),
     }
 }
 
@@ -123,11 +125,11 @@ impl Item {
                     }
 
                     let effect_modifier = get_modifier_func(
-                        modifier.func.as_str(),
+                        modifier.func,
                         modifier.skillTypeID,
                         modifier.groupID,
                     );
-                    let target = get_target_object(modifier.domain.as_str(), origin);
+                    let target = get_target_object(modifier.domain, origin);
                     let category = get_effect_category(type_dogma_effect.effectCategory);
                     let operator = get_effect_operator(modifier.operation.unwrap());
 
