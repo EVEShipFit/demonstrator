@@ -3,14 +3,12 @@ use serde::Deserialize;
 #[allow(non_snake_case)]
 #[derive(Deserialize, Debug)]
 pub struct TypeId {
-    pub capacity: Option<f32>,
+    pub name: String,
     pub groupID: i32,
     pub categoryID: i32,
     pub marketGroupID: Option<i32>,
+    pub capacity: Option<f32>,
     pub mass: Option<f32>,
-    pub metaGroupID: Option<i32>,
-    pub name: String,
-    pub portionSize: Option<i32>,
     pub radius: Option<f32>,
     pub volume: Option<f32>,
 }
@@ -39,11 +37,9 @@ pub struct TypeDogma {
 #[allow(non_snake_case)]
 #[derive(Deserialize, Debug)]
 pub struct DogmaAttribute {
-    pub dataType: i32,
     pub defaultValue: f32,
     pub highIsGood: bool,
     pub stackable: bool,
-    pub unitID: Option<i32>,
 }
 
 #[allow(non_snake_case)]
@@ -75,7 +71,7 @@ pub struct DogmaEffect {
     pub trackingSpeedAttributeID: Option<i32>,
     pub fittingUsageChanceAttributeID: Option<i32>,
     pub resistanceAttributeID: Option<i32>,
-    pub modifierInfo: Option<Vec<DogmaEffectModifierInfo>>,
+    pub modifierInfo: Vec<DogmaEffectModifierInfo>,
 }
 
 #[allow(non_snake_case)]

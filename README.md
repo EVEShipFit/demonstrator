@@ -38,3 +38,13 @@ TODO
 
 The library is created in Rust, and can be compiled (or in fact, is intended to be compiled) to WebAssembly (WASM).
 WASM allows for any website to integrate it, and just call it like it is a Javascript function.
+
+## Protobuf
+
+The Dogma-engine requires a lot of information to calculate the statistics of a fit.
+To make the load-time of the webpage as fast as possible, protobuf (v2) is used to transfer the data from the web-server to the web-browser.
+
+Not only are the protobuf files smaller, loading them in Javascript is also significantly faster.
+Additionally, it is also a good moment to prepare the data a bit better, meaning the client has to do less work to start rendering the fit.
+
+See [protobuf/](./protobuf/) for more details how the files are created.

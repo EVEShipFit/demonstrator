@@ -1,4 +1,5 @@
 import * as wasm from "eveshipfit";
+import * as esf_pb2 from "./esf_pb2.js";
 
 wasm.init();
 
@@ -75,7 +76,6 @@ const dogma_effect_to_slots = {
 
 let dogma_attributes = null;
 let dogma_effects = null;
-let group_ids = null;
 let type_ids = null;
 let type_dogma = null;
 let attribute_mapping = {};
@@ -103,47 +103,21 @@ window.get_type_id = function(type_id) {
 async function fetch_datafiles() {
     let start = performance.now();
 
-    let response = await fetch("static/typeDogma.json");
-    type_dogma = await response.json();
+    let response = await fetch("static/typeDogma.pb2");
+    let buffer = await response.arrayBuffer();
+    type_dogma = esf_pb2.esf.TypeDogma.decode(new Uint8Array(buffer)).entries;
 
-    response = await fetch("static/groupIDs.json");
-    group_ids = await response.json();
+    response = await fetch("static/typeIDs.pb2");
+    buffer = await response.arrayBuffer();
+    type_ids = esf_pb2.esf.TypeIDs.decode(new Uint8Array(buffer)).entries;
 
-    response = await fetch("static/typeIDs.json");
-    type_ids = await response.json();
+    response = await fetch("static/dogmaEffects.pb2");
+    buffer = await response.arrayBuffer();
+    dogma_effects = esf_pb2.esf.DogmaEffects.decode(new Uint8Array(buffer)).entries;
 
-    response = await fetch("static/dogmaEffects.json");
-    dogma_effects = await response.json();
-
-    response = await fetch("static/dogmaAttributes.json");
-    dogma_attributes = await response.json();
-
-    /* Add for all TypeIDs a CategoryID, to speed up lookups. */
-    for (let type_id in type_ids) {
-        type_ids[type_id].categoryID = group_ids[type_ids[type_id].groupID].categoryID;
-    }
-
-    /* We augment the dogma attributes with some extra attributes we calculate. */
-    dogma_attributes[-1] = {
-        "name": "alignTime",
-        "high_is_good": false,
-        "published": true,
-    }
-    dogma_attributes[-2] = {
-        "name": "scanStrength",
-        "high_is_good": true,
-        "published": true,
-    }
-    dogma_attributes[-3] = {
-        "name": "cpuUsage",
-        "high_is_good": true,
-        "published": true,
-    }
-    dogma_attributes[-4] = {
-        "name": "powerUsage",
-        "high_is_good": true,
-        "published": true,
-    }
+    response = await fetch("static/dogmaAttributes.pb2");
+    buffer = await response.arrayBuffer();
+    dogma_attributes = esf_pb2.esf.DogmaAttributes.decode(new Uint8Array(buffer)).entries;
 
     /* Create a reverse lookup table for dogma attributes. */
     for (let dogma_attribute in dogma_attributes) {
@@ -428,7 +402,7 @@ function print_debug_information(calculation) {
     function print_local_effects(effects) {
         stats += "Local effects: <ul>";
         for (let effect of effects) {
-            stats += "<li>" + dogma_effects[effect].effectName + "</li>";
+            stats += "<li>" + dogma_effects[effect].name + "</li>";
         }
         stats += "</ul>";
     }

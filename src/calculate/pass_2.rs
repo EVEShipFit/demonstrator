@@ -115,8 +115,8 @@ impl Item {
         for dogma_effect in info.get_dogma_effects(self.type_id) {
             let type_dogma_effect = info.get_dogma_effect(dogma_effect.effectID);
 
-            if let Some(modifier_info) = &type_dogma_effect.modifierInfo {
-                for modifier in modifier_info {
+            if !type_dogma_effect.modifierInfo.is_empty() {
+                for modifier in type_dogma_effect.modifierInfo {
                     /* We ignore operator 9 (calculates Skill Level based on Skill Points; irrelevant for fits). */
                     if modifier.operation.unwrap() == 9 {
                         continue;
