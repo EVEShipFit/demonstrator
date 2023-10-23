@@ -100,24 +100,21 @@ window.get_type_id = function(type_id) {
     return type_ids[type_id];
 }
 
+async function fetch_datafile(name, pb2) {
+    let response = await fetch("static/" + name + ".pb2");
+    let buffer = await response.arrayBuffer();
+    return pb2.decode(new Uint8Array(buffer)).entries;
+}
+
 async function fetch_datafiles() {
     let start = performance.now();
 
-    let response = await fetch("static/typeDogma.pb2");
-    let buffer = await response.arrayBuffer();
-    type_dogma = esf_pb2.esf.TypeDogma.decode(new Uint8Array(buffer)).entries;
-
-    response = await fetch("static/typeIDs.pb2");
-    buffer = await response.arrayBuffer();
-    type_ids = esf_pb2.esf.TypeIDs.decode(new Uint8Array(buffer)).entries;
-
-    response = await fetch("static/dogmaEffects.pb2");
-    buffer = await response.arrayBuffer();
-    dogma_effects = esf_pb2.esf.DogmaEffects.decode(new Uint8Array(buffer)).entries;
-
-    response = await fetch("static/dogmaAttributes.pb2");
-    buffer = await response.arrayBuffer();
-    dogma_attributes = esf_pb2.esf.DogmaAttributes.decode(new Uint8Array(buffer)).entries;
+    [type_dogma, type_ids, dogma_effects, dogma_attributes] = await Promise.all([
+        fetch_datafile("typeDogma", esf_pb2.esf.TypeDogma),
+        fetch_datafile("typeIDs", esf_pb2.esf.TypeIDs),
+        fetch_datafile("dogmaEffects", esf_pb2.esf.DogmaEffects),
+        fetch_datafile("dogmaAttributes", esf_pb2.esf.DogmaAttributes),
+    ]);
 
     /* Create a reverse lookup table for dogma attributes. */
     for (let dogma_attribute in dogma_attributes) {
