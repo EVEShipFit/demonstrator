@@ -101,9 +101,19 @@ window.get_type_id = function(type_id) {
 }
 
 async function fetch_datafile(name, pb2) {
-    let response = await fetch("static/" + name + ".pb2");
-    let buffer = await response.arrayBuffer();
-    return pb2.decode(new Uint8Array(buffer)).entries;
+    const response = await fetch("static/" + name + ".pb2");
+    const content_length = response.headers.get("content-length");
+    const reader = response.body.getReader();
+
+    let values = [];
+    while (true) {
+        const {done, value} = await reader.read();
+        values.push(value);
+        if (done) break;
+    }
+
+    const result = pb2.decode(values, content_length);
+    return result.entries;
 }
 
 async function fetch_datafiles() {

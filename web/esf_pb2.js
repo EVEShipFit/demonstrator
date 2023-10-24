@@ -1,9 +1,9 @@
 /*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
-import * as $protobuf from "protobufjs/minimal";
+import * as $Reader from "./protobuf.js";
 
-const $Reader = $protobuf.Reader, $util = $protobuf.util;
-
-const $root = $protobuf.roots["default"] || ($protobuf.roots["default"] = {});
+const $root = {};
+const emptyArray = Object.freeze ? Object.freeze([]) : [];
+const emptyObject = Object.freeze ? Object.freeze({}) : {};
 
 export const esf = $root.esf = (() => {
 
@@ -19,7 +19,7 @@ export const esf = $root.esf = (() => {
                         this[ks[i]] = p[ks[i]];
         }
 
-        TypeDogma.prototype.entries = $util.emptyObject;
+        TypeDogma.prototype.entries = emptyObject;
 
         TypeDogma.decode = function decode(r, l) {
             if (!(r instanceof $Reader))
@@ -29,7 +29,7 @@ export const esf = $root.esf = (() => {
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
-                        if (m.entries === $util.emptyObject)
+                        if (m.entries === emptyObject)
                             m.entries = {};
                         var c2 = r.uint32() + r.pos;
                         k = 0;
@@ -70,8 +70,8 @@ export const esf = $root.esf = (() => {
                             this[ks[i]] = p[ks[i]];
             }
 
-            TypeDogmaEntry.prototype.dogmaAttributes = $util.emptyArray;
-            TypeDogmaEntry.prototype.dogmaEffects = $util.emptyArray;
+            TypeDogmaEntry.prototype.dogmaAttributes = emptyArray;
+            TypeDogmaEntry.prototype.dogmaEffects = emptyArray;
 
             TypeDogmaEntry.decode = function decode(r, l) {
                 if (!(r instanceof $Reader))
@@ -133,9 +133,9 @@ export const esf = $root.esf = (() => {
                         }
                     }
                     if (!m.hasOwnProperty("attributeID"))
-                        throw $util.ProtocolError("missing required 'attributeID'", { instance: m });
+                        throw Error("missing required 'attributeID'", { instance: m });
                     if (!m.hasOwnProperty("value"))
-                        throw $util.ProtocolError("missing required 'value'", { instance: m });
+                        throw Error("missing required 'value'", { instance: m });
                     return m;
                 };
 
@@ -175,9 +175,9 @@ export const esf = $root.esf = (() => {
                         }
                     }
                     if (!m.hasOwnProperty("effectID"))
-                        throw $util.ProtocolError("missing required 'effectID'", { instance: m });
+                        throw Error("missing required 'effectID'", { instance: m });
                     if (!m.hasOwnProperty("isDefault"))
-                        throw $util.ProtocolError("missing required 'isDefault'", { instance: m });
+                        throw Error("missing required 'isDefault'", { instance: m });
                     return m;
                 };
 
@@ -200,7 +200,7 @@ export const esf = $root.esf = (() => {
                         this[ks[i]] = p[ks[i]];
         }
 
-        TypeIDs.prototype.entries = $util.emptyObject;
+        TypeIDs.prototype.entries = emptyObject;
 
         TypeIDs.decode = function decode(r, l) {
             if (!(r instanceof $Reader))
@@ -210,7 +210,7 @@ export const esf = $root.esf = (() => {
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
-                        if (m.entries === $util.emptyObject)
+                        if (m.entries === emptyObject)
                             m.entries = {};
                         var c2 = r.uint32() + r.pos;
                         k = 0;
@@ -308,13 +308,13 @@ export const esf = $root.esf = (() => {
                     }
                 }
                 if (!m.hasOwnProperty("name"))
-                    throw $util.ProtocolError("missing required 'name'", { instance: m });
+                    throw Error("missing required 'name'", { instance: m });
                 if (!m.hasOwnProperty("groupID"))
-                    throw $util.ProtocolError("missing required 'groupID'", { instance: m });
+                    throw Error("missing required 'groupID'", { instance: m });
                 if (!m.hasOwnProperty("categoryID"))
-                    throw $util.ProtocolError("missing required 'categoryID'", { instance: m });
+                    throw Error("missing required 'categoryID'", { instance: m });
                 if (!m.hasOwnProperty("published"))
-                    throw $util.ProtocolError("missing required 'published'", { instance: m });
+                    throw Error("missing required 'published'", { instance: m });
                 return m;
             };
 
@@ -334,7 +334,7 @@ export const esf = $root.esf = (() => {
                         this[ks[i]] = p[ks[i]];
         }
 
-        DogmaAttributes.prototype.entries = $util.emptyObject;
+        DogmaAttributes.prototype.entries = emptyObject;
 
         DogmaAttributes.decode = function decode(r, l) {
             if (!(r instanceof $Reader))
@@ -344,7 +344,7 @@ export const esf = $root.esf = (() => {
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
-                        if (m.entries === $util.emptyObject)
+                        if (m.entries === emptyObject)
                             m.entries = {};
                         var c2 = r.uint32() + r.pos;
                         k = 0;
@@ -422,15 +422,15 @@ export const esf = $root.esf = (() => {
                     }
                 }
                 if (!m.hasOwnProperty("name"))
-                    throw $util.ProtocolError("missing required 'name'", { instance: m });
+                    throw Error("missing required 'name'", { instance: m });
                 if (!m.hasOwnProperty("published"))
-                    throw $util.ProtocolError("missing required 'published'", { instance: m });
+                    throw Error("missing required 'published'", { instance: m });
                 if (!m.hasOwnProperty("defaultValue"))
-                    throw $util.ProtocolError("missing required 'defaultValue'", { instance: m });
+                    throw Error("missing required 'defaultValue'", { instance: m });
                 if (!m.hasOwnProperty("highIsGood"))
-                    throw $util.ProtocolError("missing required 'highIsGood'", { instance: m });
+                    throw Error("missing required 'highIsGood'", { instance: m });
                 if (!m.hasOwnProperty("stackable"))
-                    throw $util.ProtocolError("missing required 'stackable'", { instance: m });
+                    throw Error("missing required 'stackable'", { instance: m });
                 return m;
             };
 
@@ -450,7 +450,7 @@ export const esf = $root.esf = (() => {
                         this[ks[i]] = p[ks[i]];
         }
 
-        DogmaEffects.prototype.entries = $util.emptyObject;
+        DogmaEffects.prototype.entries = emptyObject;
 
         DogmaEffects.decode = function decode(r, l) {
             if (!(r instanceof $Reader))
@@ -460,7 +460,7 @@ export const esf = $root.esf = (() => {
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
-                        if (m.entries === $util.emptyObject)
+                        if (m.entries === emptyObject)
                             m.entries = {};
                         var c2 = r.uint32() + r.pos;
                         k = 0;
@@ -515,7 +515,7 @@ export const esf = $root.esf = (() => {
             DogmaEffect.prototype.trackingSpeedAttributeID = 0;
             DogmaEffect.prototype.fittingUsageChanceAttributeID = 0;
             DogmaEffect.prototype.resistanceAttributeID = 0;
-            DogmaEffect.prototype.modifierInfo = $util.emptyArray;
+            DogmaEffect.prototype.modifierInfo = emptyArray;
 
             DogmaEffect.decode = function decode(r, l) {
                 if (!(r instanceof $Reader))
@@ -596,21 +596,21 @@ export const esf = $root.esf = (() => {
                     }
                 }
                 if (!m.hasOwnProperty("name"))
-                    throw $util.ProtocolError("missing required 'name'", { instance: m });
+                    throw Error("missing required 'name'", { instance: m });
                 if (!m.hasOwnProperty("effectCategory"))
-                    throw $util.ProtocolError("missing required 'effectCategory'", { instance: m });
+                    throw Error("missing required 'effectCategory'", { instance: m });
                 if (!m.hasOwnProperty("electronicChance"))
-                    throw $util.ProtocolError("missing required 'electronicChance'", { instance: m });
+                    throw Error("missing required 'electronicChance'", { instance: m });
                 if (!m.hasOwnProperty("isAssistance"))
-                    throw $util.ProtocolError("missing required 'isAssistance'", { instance: m });
+                    throw Error("missing required 'isAssistance'", { instance: m });
                 if (!m.hasOwnProperty("isOffensive"))
-                    throw $util.ProtocolError("missing required 'isOffensive'", { instance: m });
+                    throw Error("missing required 'isOffensive'", { instance: m });
                 if (!m.hasOwnProperty("isWarpSafe"))
-                    throw $util.ProtocolError("missing required 'isWarpSafe'", { instance: m });
+                    throw Error("missing required 'isWarpSafe'", { instance: m });
                 if (!m.hasOwnProperty("propulsionChance"))
-                    throw $util.ProtocolError("missing required 'propulsionChance'", { instance: m });
+                    throw Error("missing required 'propulsionChance'", { instance: m });
                 if (!m.hasOwnProperty("rangeChance"))
-                    throw $util.ProtocolError("missing required 'rangeChance'", { instance: m });
+                    throw Error("missing required 'rangeChance'", { instance: m });
                 return m;
             };
 
@@ -672,9 +672,9 @@ export const esf = $root.esf = (() => {
                         }
                     }
                     if (!m.hasOwnProperty("domain"))
-                        throw $util.ProtocolError("missing required 'domain'", { instance: m });
+                        throw Error("missing required 'domain'", { instance: m });
                     if (!m.hasOwnProperty("func"))
-                        throw $util.ProtocolError("missing required 'func'", { instance: m });
+                        throw Error("missing required 'func'", { instance: m });
                     return m;
                 };
 
