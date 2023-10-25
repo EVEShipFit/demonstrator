@@ -103,7 +103,11 @@ Reader.prototype.bytes = function read_bytes() {
 
 Reader.prototype.string = function read_string() {
     var bytes = this.bytes();
-    return new TextDecoder().decode(bytes);
+    var str = "";
+    for (var i = 0; i < bytes.length; i++) {
+        str += String.fromCharCode(bytes[i]);
+    }
+    return str;
 };
 
 let f32 = new Float32Array([ -0 ]), f8b = new Uint8Array(f32.buffer);
