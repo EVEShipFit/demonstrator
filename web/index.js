@@ -104,15 +104,7 @@ async function fetch_datafile(name, pb2) {
     const response = await fetch("static/" + name + ".pb2");
     const content_length = response.headers.get("content-length");
     const reader = response.body.getReader();
-
-    let values = [];
-    while (true) {
-        const {done, value} = await reader.read();
-        values.push(value);
-        if (done) break;
-    }
-
-    const result = pb2.decode(values, content_length);
+    const result = await pb2.decode(reader, content_length);
     return result.entries;
 }
 

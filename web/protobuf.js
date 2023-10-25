@@ -4,73 +4,64 @@
  * A stripped down copy of protobuf.js's reader.
  *
  * The minimal version of protobuf.js is 100KB. But most of the stuff is not used.
- * This code in fact is the only code that is being used from the protobuf.js library.
+ * Additionally, it has no way to read from a stream. This version addresses both:
+ * only implement that what we actually need, and read from a stream when needed.
+ *
+ * The smaller size means the javascript loads faster, and the streaming means the
+ * decoding can start on the first chunk (instead of when all data arrived).
  *
  * NOTE: this is not a generic Protobuf loader, and when you feed it broken protobuf
- * files, it will crash in weird ways.
+ * files, it will crash in unexpected ways.
  *
  * Original source: https://github.com/protobufjs/protobuf.js/blob/master/src/reader.js
  */
 
 module.exports = Reader;
 
-function Reader(buffers) {
-    this._buffers = buffers;
-    this._buf = buffers[0];
-    this._remaining = new Uint8Array();
+function Reader(reader) {
+    this._reader = reader;
+    this._buf = new Uint8Array();
+    this._next_buf = null;
     this._buf_pos = 0;
 
     this.pos = 0;
     this.len = 0;
 }
 
-Reader.create = function create(buffers) {
-    return new Reader(buffers);
+Reader.create = function create(reader) {
+    return new Reader(reader);
 }
 
-/* This is an early attempt in making the reader more streamable.
- * It allows for a list of buffers, and stitches them together correctly. */
+Reader.prototype.need_data = function need_data() {
+    return this._buf.length - this._buf_pos < 2048 && this._next_buf === null;
+}
+
+Reader.prototype.fetch_data = async function fetch_data() {
+    if (this._buf.length - this._buf_pos >= 2048) return;
+    if (this._next_buf !== null) return;
+
+    const {done, value} = await this._reader.read();
+    if (done) {
+        this._next_buf = new Uint8Array();
+    } else {
+        this._next_buf = value;
+    }
+}
+
 Reader.prototype.read = function read(len) {
-    if (this._remaining.length > 0) {
-        if (this._buf_pos >= this._remaining.length) {
-            /* If more bytes were consumed than the remaining buffer has, reset the remaining buffer. */
-            this._buf_pos -= this._remaining.length;
-            this._remaining = new Uint8Array();
-        } else {
-            /* Otherwise only remove the bytes from the remaining buffer. */
-            this._remaining = this._remaining.slice(this._buf_pos);
-            this._buf_pos = 0;
-        }
-    }
+    if (this._next_buf === null) return this._buf;
 
-    /* If the requested length doesn't fit in the buffer, fetch a new chunk. */
-    if (this._buf_pos + len > this._remaining.length + this._buf.length) {
-        let cur_buf = undefined;
-        let next_buf = undefined;
-        for (let buffer of this._buffers) {
-            if (cur_buf !== undefined) {
-                next_buf = buffer;
-                break;
-            }
-            if (buffer === this._buf) {
-                cur_buf = buffer;
-            }
-        }
+    if (this._buf_pos > this._buf.length) {
+        this._buf_pos -= this._buf.length;
+        this._buf = this._next_buf;
 
-        if (next_buf === undefined) {
-            return this._buf;
-        }
-
-        this._remaining = this._buf.slice(this._buf_pos);
-        this._buf = next_buf;
+        this._next_buf = null;
+    } else if (this._buf_pos + len > this._buf.length) {
+        this._buf = this._buf.slice(this._buf_pos);
         this._buf_pos = 0;
+        return new Uint8Array([...this._buf, ...this._next_buf.slice(0, len - this._buf.length)]);
     }
 
-    /* If we have some bytes remaining from the last pass, we have to do an expensive copy. */
-    if (this._remaining.length > 0) {
-        this._buf_pos = 0;
-        return new Uint8Array([...this._remaining, ...this._buf.slice(0, len - this._remaining.length)]);
-    }
     return this._buf;
 }
 

@@ -21,11 +21,15 @@ export const esf = $root.esf = (() => {
 
         TypeDogma.prototype.entries = emptyObject;
 
-        TypeDogma.decode = function decode(r, l) {
+        TypeDogma.decode = async function decode(r, l) {
             if (!(r instanceof $Reader))
                 r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l, m = new $root.esf.TypeDogma(), k, value;
             while (r.pos < c) {
+                if (r.need_data()) {
+                    await r.fetch_data();
+                }
+
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
@@ -202,11 +206,15 @@ export const esf = $root.esf = (() => {
 
         TypeIDs.prototype.entries = emptyObject;
 
-        TypeIDs.decode = function decode(r, l) {
+        TypeIDs.decode = async function decode(r, l) {
             if (!(r instanceof $Reader))
                 r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l, m = new $root.esf.TypeIDs(), k, value;
             while (r.pos < c) {
+                if (r.need_data()) {
+                    await r.fetch_data();
+                }
+
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
@@ -336,11 +344,15 @@ export const esf = $root.esf = (() => {
 
         DogmaAttributes.prototype.entries = emptyObject;
 
-        DogmaAttributes.decode = function decode(r, l) {
+        DogmaAttributes.decode = async function decode(r, l) {
             if (!(r instanceof $Reader))
                 r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l, m = new $root.esf.DogmaAttributes(), k, value;
             while (r.pos < c) {
+                if (r.need_data()) {
+                    await r.fetch_data();
+                }
+
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
@@ -452,11 +464,15 @@ export const esf = $root.esf = (() => {
 
         DogmaEffects.prototype.entries = emptyObject;
 
-        DogmaEffects.decode = function decode(r, l) {
+        DogmaEffects.decode = async function decode(r, l) {
             if (!(r instanceof $Reader))
                 r = $Reader.create(r);
             var c = l === undefined ? r.len : r.pos + l, m = new $root.esf.DogmaEffects(), k, value;
             while (r.pos < c) {
+                if (r.need_data()) {
+                    await r.fetch_data();
+                }
+
                 var t = r.uint32();
                 switch (t >>> 3) {
                 case 1: {
