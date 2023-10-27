@@ -5,6 +5,8 @@ wasm.init();
 
 for (let div of document.getElementsByClassName("slot")) {
     div.addEventListener("dblclick", function(event) {
+        if (current_fit === null) return;
+
         /* On double-click, remove the item from the fit. */
         for (let type of ["lowslot", "medslot", "hislot", "rig", "subsystem"]) {
             if (div.dataset[type] !== undefined) {
@@ -21,6 +23,16 @@ document.getElementById("hulls-filter").addEventListener("input", function(event
 });
 document.getElementById("hardware-filter").addEventListener("input", function(event) {
     rebuild_hardware_list();
+});
+
+document.getElementById("share-link").addEventListener("click", async function(event) {
+    event.preventDefault();
+    const link = await create_link();
+
+    /* Copy link in clipboard. */
+    navigator.clipboard.writeText(link).then(function() {
+        document.getElementById("share-status").innerHTML = "Copied to clipboard!";
+    });
 });
 
 const categories = {
@@ -49,37 +61,36 @@ async function concatUint8Arrays(uint8arrays) {
     return new Uint8Array(buffer);
   }
 
-/* Inspired by: https://evanhahn.com/javascript-compression-streams-api-with-strings/ */
 async function compress(str) {
     const stream = new Blob([str]).stream();
     const compressedStream = stream.pipeThrough(new CompressionStream("gzip"));
+    const reader = compressedStream.getReader();
 
-    const chunks = [];
-    for await (const chunk of compressedStream) {
-        chunks.push(chunk);
+    let result = "";
+    while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        result += value.reduce(function (data, byte) { return data + String.fromCharCode(byte); }, "");
     }
 
-    const result = await concatUint8Arrays(chunks);
-    return btoa(result.reduce(function (data, byte) { return data + String.fromCharCode(byte); }, ""));
+    return btoa(result);
 }
 
-/* Inspired by: https://evanhahn.com/javascript-compression-streams-api-with-strings/ */
 async function decompress(base64compressedBytes) {
     const stream = new Blob([Uint8Array.from(atob(base64compressedBytes), c => c.charCodeAt(0))]).stream();
     const decompressedStream = stream.pipeThrough(new DecompressionStream("gzip"));
+    const reader = decompressedStream.getReader();
 
-    const chunks = [];
-    for await (const chunk of decompressedStream) {
-        chunks.push(chunk);
+    let result = "";
+    while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        result += value.reduce(function (data, byte) { return data + String.fromCharCode(byte); }, "");
     }
-    const result = await concatUint8Arrays(chunks);
-    return new TextDecoder().decode(result);
+
+    return result;
 }
 
-
-
-const default_esi_fit = {"name": "New", "ship_type_id": 29984, "description": "", "items": []};
-let esi_fit = default_esi_fit;
 
 const esi_flag_mapping = {
     "cargo": 5,
@@ -118,7 +129,6 @@ let type_dogma = null;
 let attribute_mapping = {};
 let skills = null;
 let current_fit = null;
-let compressed_fit = null;
 
 fetch_datafiles();
 
@@ -164,30 +174,44 @@ async function fetch_datafiles() {
     console.log("Datafiles loaded in ms:", performance.now() - start);
 
     skills = load_skills(5);
-    load_hash();
+    load_localstorage();
+    await load_hash();
+    recalculate();
 
     rebuild_hulls_list();
     rebuild_hardware_list();
 
     /* Monitor the hash for changes. */
-    window.addEventListener("hashchange", function() {
-        load_hash();
+    window.addEventListener("hashchange", async function() {
+        if (await load_hash()) {
+            recalculate();
+        }
     });
 }
 
-async function load_hash() {
-    if (!window.location.hash) return;
-    const hash = window.location.hash.substring(1);
-    if (hash == compressed_fit) return;
+function load_localstorage() {
+    const fit = window.localStorage.getItem("fitting");
+    if (fit === undefined) return;
 
+    current_fit = JSON.parse(fit);
+}
+
+async function load_hash() {
+    if (!window.location.hash) return false;
+
+    const hash = window.location.hash.substring(1);
+    window.location.hash = "";
+    if (!hash) return false;
+
+    let esi_fit;
     try {
         esi_fit = JSON.parse(await decompress(hash));
     } catch (e) {
-        esi_fit = default_esi_fit;
+        return false;
     }
 
     current_fit = convert_from_esi_fit(esi_fit);
-    recalculate();
+    return true;
 }
 
 function click_change_hull(e) {
@@ -198,6 +222,8 @@ function click_change_hull(e) {
 }
 
 function click_add_to_fit(e) {
+    if (current_fit === null) return;
+
     const type_id = e.currentTarget.dataset.type_id;
 
     /* Find out what type of module this is. */
@@ -298,18 +324,27 @@ function rebuild_hardware_list() {
 }
 
 function recalculate() {
+    if (current_fit === null) return;
+
+    document.getElementById("share-status").innerHTML = "";
+
     const calculation = calculate_ship(current_fit, skills);
     render_ship(calculation);
     print_debug_information(calculation);
-    esi_fit = convert_to_esi_fit(current_fit);
-    compress(JSON.stringify(esi_fit)).then(compressed => {
-        compressed_fit = compressed;
-        window.location.hash = "#" + compressed;
-    });
+
+    window.localStorage.setItem("fitting", JSON.stringify(current_fit));
+}
+
+async function create_link() {
+    if (current_fit === null) return;
+
+    const esi_fit = convert_to_esi_fit(current_fit);
+    const hash = await compress(JSON.stringify(esi_fit));
+    const link = window.location.href.split("#")[0] + "#" + hash;
+    return link;
 }
 
 function convert_to_esi_fit(fitting) {
-    // const esi_fit = {"name": "C3 Ratter : NishEM", "ship_type_id": 29984, "description": "", "items": [{"flag": 125, "quantity": 1, "type_id": 45626}, {"flag": 126, "quantity": 1, "type_id": 45591}, {"flag": 127, "quantity": 1, "type_id": 45601}, {"flag": 128, "quantity": 1, "type_id": 45615}, {"flag": 11, "quantity": 1, "type_id": 22291}, {"flag": 12, "quantity": 1, "type_id": 22291}, {"flag": 13, "quantity": 1, "type_id": 22291}, {"flag": 19, "quantity": 1, "type_id": 41218}, {"flag": 20, "quantity": 1, "type_id": 35790}, {"flag": 21, "quantity": 1, "type_id": 2281}, {"flag": 22, "quantity": 1, "type_id": 15766}, {"flag": 23, "quantity": 1, "type_id": 19187}, {"flag": 24, "quantity": 1, "type_id": 19187}, {"flag": 25, "quantity": 1, "type_id": 35790}, {"flag": 27, "quantity": 1, "type_id": 25715}, {"flag": 28, "quantity": 1, "type_id": 25715}, {"flag": 29, "quantity": 1, "type_id": 25715}, {"flag": 30, "quantity": 1, "type_id": 25715}, {"flag": 31, "quantity": 1, "type_id": 25715}, {"flag": 32, "quantity": 1, "type_id": 25715}, {"flag": 33, "quantity": 1, "type_id": 28756}, {"flag": 92, "quantity": 1, "type_id": 31724}, {"flag": 93, "quantity": 1, "type_id": 31824}, {"flag": 94, "quantity": 1, "type_id": 31378}, {"flag": 5, "quantity": 3720, "type_id": 24492}, {"flag": 5, "quantity": 5472, "type_id": 2679}, {"flag": 5, "quantity": 1, "type_id": 35795}, {"flag": 5, "quantity": 1, "type_id": 35794}, {"flag": 5, "quantity": 8, "type_id": 30486}, {"flag": 5, "quantity": 1, "type_id": 35794}, {"flag": 5, "quantity": 396, "type_id": 24492}]};
     const esi_fit = {
         "name": "EVEShipFit",
         "ship_type_id": fitting.ship_type_id,
